@@ -23,6 +23,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * rruffer
+ */
 public class FormularioActivity extends AppCompatActivity {
 
     public static final int CODIGO_CAMERA = 567;
@@ -97,7 +100,7 @@ public class FormularioActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call call, Throwable t) {
-                        Log.e("onFailure", "requisicao falhou");
+                        Log.e("onFailure", "requisicao falhou: " + t);
                     }
                 });
 

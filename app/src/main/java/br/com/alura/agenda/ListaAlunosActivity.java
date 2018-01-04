@@ -4,9 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,9 @@ import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 import br.com.alura.agenda.tasks.EnviaAlunosTask;
 
+/**
+ * rruffer
+ */
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
@@ -60,6 +64,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> alunos = dao.buscaAlunos();
         dao.close();
+
+        for(Aluno aluno: alunos){
+            Log.i("ID do aluno: ", aluno.getId() != null ? aluno.getId():"null");
+        }
 
         AlunosAdapter adapter = new AlunosAdapter(this, alunos);
         listaAlunos.setAdapter(adapter);

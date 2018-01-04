@@ -7,9 +7,8 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- * Created by alura on 11/29/16.
+ * rruffer
  */
-
 public interface AlunoService {
 
     @POST("aluno")

@@ -15,7 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
- * Created by alura on 08/06/16.
+ * rruffer
  */
 public class Localizador implements GoogleApiClient.ConnectionCallbacks, LocationListener {
 

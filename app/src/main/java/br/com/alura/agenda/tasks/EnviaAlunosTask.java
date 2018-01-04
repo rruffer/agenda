@@ -13,7 +13,7 @@ import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 
 /**
- * Created by renan on 20/01/16.
+ * rruffer
  */
 public class EnviaAlunosTask extends AsyncTask<Void, Void, String> {
     private Context context;

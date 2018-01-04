@@ -9,7 +9,7 @@ import android.widget.RatingBar;
 import br.com.alura.agenda.modelo.Aluno;
 
 /**
- * Created by alura on 12/08/15.
+ * rruffer
  */
 public class FormularioHelper {
 

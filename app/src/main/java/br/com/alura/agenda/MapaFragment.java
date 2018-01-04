@@ -19,7 +19,7 @@ import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 
 /**
- * Created by alura on 07/06/16.
+ * rruffer
  */
 public class MapaFragment extends SupportMapFragment implements OnMapReadyCallback {
 

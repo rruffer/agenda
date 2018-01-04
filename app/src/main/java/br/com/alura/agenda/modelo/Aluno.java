@@ -1,15 +1,13 @@
 package br.com.alura.agenda.modelo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 
 /**
- * Created by alura on 12/08/15.
+ * rruffer
  */
 public class Aluno implements Serializable {
 
-    private Long id;
+    private String id;
     private String nome;
     private String endereco;
     private String telefone;
@@ -17,11 +15,11 @@ public class Aluno implements Serializable {
     private Double nota;
     private String caminhoFoto;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

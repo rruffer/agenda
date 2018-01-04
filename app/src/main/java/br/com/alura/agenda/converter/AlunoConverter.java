@@ -8,7 +8,7 @@ import java.util.List;
 import br.com.alura.agenda.modelo.Aluno;
 
 /**
- * Created by renan on 15/01/16.
+ * rruffer
  */
 public class AlunoConverter {
     public String converteParaJSON(List<Aluno> alunos) {

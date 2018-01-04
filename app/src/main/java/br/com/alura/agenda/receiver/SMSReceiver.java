@@ -11,7 +11,7 @@ import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 
 /**
- * Created by renan on 13/01/16.
+ * rruffer
  */
 public class SMSReceiver extends BroadcastReceiver {
     @Override

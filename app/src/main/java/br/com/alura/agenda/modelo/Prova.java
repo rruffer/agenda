@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by alura on 05/05/16.
+ * rruffer
  */
 public class Prova implements Serializable {
 
