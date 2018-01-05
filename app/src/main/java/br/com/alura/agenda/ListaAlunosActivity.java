@@ -21,7 +21,11 @@ import java.util.List;
 import br.com.alura.agenda.adapter.AlunosAdapter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
+import br.com.alura.agenda.retrofit.RetrofitInicializador;
 import br.com.alura.agenda.tasks.EnviaAlunosTask;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * rruffer
@@ -76,6 +80,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        Call<List<Aluno>> call = new RetrofitInicializador().getAlunoService().listaAlunos();
+        call.enqueue(new Callback<List<Aluno>>() {
+            @Override
+            public void onResponse(Call<List<Aluno>> call, Response<List<Aluno>> response) {
+                List<Aluno> alunos = response.body();
+                AlunoDAO alunoDAO = new AlunoDAO(ListaAlunosActivity.this);
+                alunoDAO.insere(alunos);
+            }
+
+            @Override
+            public void onFailure(Call<List<Aluno>> call, Throwable t) {
+
+            }
+        });
+
         carregaLista();
     }
 

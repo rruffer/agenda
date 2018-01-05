@@ -101,6 +101,9 @@ public class AlunoDAO extends SQLiteOpenHelper {
 //        aluno.setId(id);
     }
 
+    public void insere(List<Aluno> alunos) {
+    }
+
     public List<Aluno> buscaAlunos() {
         String sql = "SELECT * FROM Alunos;";
         SQLiteDatabase db = getReadableDatabase();
@@ -167,4 +170,6 @@ public class AlunoDAO extends SQLiteOpenHelper {
         c.close();
         return resultados > 0;
     }
+
+
 }
