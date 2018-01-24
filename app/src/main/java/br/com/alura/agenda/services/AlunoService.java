@@ -3,6 +3,7 @@ package br.com.alura.agenda.services;
 
 import java.util.List;
 
+import br.com.alura.agenda.dto.AlunoSync;
 import br.com.alura.agenda.modelo.Aluno;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,5 +19,5 @@ public interface AlunoService {
     Call<Void> insere(@Body Aluno aluno);
 
     @GET("aluno")
-    Call<List<Aluno>> listaAlunos();
+    Call<AlunoSync> lista();
 }

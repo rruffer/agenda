@@ -1,10 +1,13 @@
 package br.com.alura.agenda.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * rruffer
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Aluno implements Serializable {
 
     private String id;
