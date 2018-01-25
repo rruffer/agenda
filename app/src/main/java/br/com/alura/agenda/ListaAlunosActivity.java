@@ -63,6 +63,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
         registerForContextMenu(listaAlunos);
+        buscaAlunos();
     }
 
     private void carregaLista() {
@@ -82,6 +83,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        carregaLista();
+    }
+
+    private void buscaAlunos() {
         Call<AlunoSync> call = new RetrofitInicializador().getAlunoService().lista();
         call.enqueue(new Callback<AlunoSync>() {
             @Override
@@ -96,8 +101,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 Log.i("onFailure", "Erro ao buscar alunos do servidor: " + t);
             }
         });
-
-        carregaLista();
     }
 
     @Override
