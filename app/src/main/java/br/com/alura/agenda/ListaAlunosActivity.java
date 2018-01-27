@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
-
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
@@ -51,6 +52,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 Intent intentVaiProFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
                 intentVaiProFormulario.putExtra("aluno", aluno);
                 startActivity(intentVaiProFormulario);
+            }
+        });
+
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_lista_aluno);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                buscaAlunos();
             }
         });
 
@@ -68,6 +77,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void carregaLista() {
+
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> alunos = dao.buscaAlunos();
         dao.close();
@@ -95,11 +105,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 AlunoSync lista = response.body();
                 AlunoDAO alunoDAO = new AlunoDAO(ListaAlunosActivity.this);
                 alunoDAO.sincroniza(lista.getAlunos());
+                carregaLista();
+                swipe.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<AlunoSync> call, Throwable t) {
                 Log.i("onFailure", "Erro ao buscar alunos do servidor: " + t);
+                swipe.setRefreshing(false);
             }
         });
     }
