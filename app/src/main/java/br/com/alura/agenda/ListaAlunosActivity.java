@@ -18,11 +18,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import br.com.alura.agenda.adapter.AlunosAdapter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.dto.AlunoSync;
+import br.com.alura.agenda.event.AtualizaListaAlunosEvent;
 import br.com.alura.agenda.modelo.Aluno;
 import br.com.alura.agenda.retrofit.RetrofitInicializador;
 import br.com.alura.agenda.tasks.EnviaAlunosTask;
@@ -37,11 +42,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listaAlunos;
     private SwipeRefreshLayout swipe;
+    private EventBus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
+
+        eventBus = EventBus.getDefault();
 
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
         listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,7 +67,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                buscaAlunos();
+                buscaAlunosDoServidor();
             }
         });
 
@@ -73,7 +81,28 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
         registerForContextMenu(listaAlunos);
-        buscaAlunos();
+        buscaAlunosDoServidor();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void atualizaListaAlunosEvent(AtualizaListaAlunosEvent event){
+        carregaLista();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        eventBus.register(this);
+        carregaLista();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        eventBus.unregister(this);
+
     }
 
     private void carregaLista() {
@@ -90,14 +119,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         listaAlunos.setAdapter(adapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        carregaLista();
-    }
-
-    private void buscaAlunos() {
+    private void buscaAlunosDoServidor() {
         Call<AlunoSync> call = new RetrofitInicializador().getAlunoService().lista();
         call.enqueue(new Callback<AlunoSync>() {
             @Override
@@ -199,6 +221,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
                         dao.deleta(aluno);
                         dao.close();
                         carregaLista();
+                        Toast.makeText(ListaAlunosActivity.this, "Aluno removido comm sucesso!: ", Toast.LENGTH_SHORT);
                     }
 
                     @Override
