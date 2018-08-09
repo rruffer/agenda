@@ -111,7 +111,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         dao.close();
 
         for(Aluno aluno: alunos){
-            Log.i("ID do aluno: ", aluno.getId() != null ? aluno.getId():"null");
+            Log.i("Aluno sincronizado: ", aluno.getSincronizado().toString());
         }
 
         AlunosAdapter adapter = new AlunosAdapter(this, alunos);
